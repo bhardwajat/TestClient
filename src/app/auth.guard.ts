@@ -7,13 +7,17 @@ import { LoginService } from './service/login.service';
 })
 export class AuthGuard implements  CanActivate{
   
-  constructor(private log: LoginService, private router: Router){}
+  constructor(private loginService: LoginService, private router: Router){}
+
 
   canActivate():boolean {
-    if(this.log.loggedIn()){
+    console.log("~~~ START of canActivate");
+    if(this.loginService.loggedIn()){
+      console.log("loggedIn returned TRUE");
       return true
     }
     else{
+      console.log("loggedIn returned FALUSE - take user to login page again");
       this.router.navigate(['/login'])
       return false
     }
