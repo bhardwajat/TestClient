@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -15,6 +15,7 @@ import { EmployeeService } from './service/employee.service';
 import { RegisterService } from './service/register.service';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthGuard } from './auth.guard';
+import { TokenInterceptorService } from './service/token-interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { AuthGuard } from './auth.guard';
     AuthGuard,
     DatePipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     EmployeeService,
     RegisterService
   ],
